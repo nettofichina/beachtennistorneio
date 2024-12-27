@@ -175,7 +175,7 @@ ul li {
 
 #bemVindoSection {
     /* Estilos específicos para a seção de Bem-Vindo */
-    border-bottom: 2px solid #e0e0e0; /* Linha divisória opcional */
+    border-bottom: 1px solid #e0e0e0; /* Linha divisória opcional */
     padding-bottom: 20px; /* Espaço adicional antes da seção de resultados */
 }
 
