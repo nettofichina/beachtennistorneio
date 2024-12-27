@@ -174,3 +174,18 @@ ul li {
     background-color: #45a049; /* Verde mais escuro para efeito de hover */
 }
 
+#bemVindoSection {
+    /* Estilos específicos para a seção de Bem-Vindo */
+    border-bottom: 1px solid #e0e0e0; /* Linha divisória opcional */
+    padding-bottom: 20px; /* Espaço adicional antes da seção de resultados */
+}
+
+#resultadosSection {
+    /* Estilos específicos para a seção de Resultados */
+    margin-top: 20px; /* Espaço adicional após a seção de Bem-Vindo */
+}
+
+/* Se precisar de mais separação visual entre seções dentro de resultados */
+#resultadosSection .section:not(:last-child) {
+    margin-bottom: 30px;
+}
