@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,23 +15,23 @@
             <div class="section" id="torneio">
                 <h1>BEM-VINDO!</h1>
                 <label for="nomeTorneio">Nome do Torneio:</label>
-                <input type="text" id="nomeTorneio" placeholder="Digite o nome do torneio" style="text-transform: uppercase;" autocapitalize="characters">
+                <input type="text" id="nomeTorneio" placeholder="Digite o nome do torneio" style="text-transform: uppercase;">
             </div>
 
             <div class="section" id="jogadores">
                 <label for="nomeJogador">Adicionar Jogador:</label>
-                <input type="text" id="nomeJogador" placeholder="Digite o nome do jogador" style="text-transform: uppercase;" autocapitalize="characters">
-                <button id="adicionarJogador">Adicionar</button>
+                <input type="text" id="nomeJogador" placeholder="Digite o nome do jogador" style="text-transform: uppercase;">
+                <button id="adicionarJogador" aria-label="Adicionar Jogador">Adicionar</button>
                 <ul id="listaJogadores" aria-live="polite"></ul>
             </div>
 
             <div class="section" id="duplas">
                 <h2>Duplas</h2>
-                <button id="sortearDuplas">Sortear Duplas</button>
+                <button id="sortearDuplas" aria-label="Sortear Duplas">Sortear Duplas</button>
                 <div id="chaves" aria-live="polite">
                     <!-- As chaves dos jogos serão exibidas aqui -->
                 </div>
-                <button id="salvarCampeonato">Salvar Campeonato</button>
+                <button id="salvarCampeonato" aria-label="Salvar Campeonato">Salvar Campeonato</button>
             </div>
         </section>
 
@@ -44,17 +44,20 @@
             </div>
 
             <div class="section" id="campeonatosSection">
-                <button id="verCampeonatosBtn">Ver Campeonatos</button>
+                <button id="verCampeonatosBtn" aria-label="Ver Campeonatos">Ver Campeonatos</button>
                 <div id="campeonatos"></div>
             </div>
 
             <div class="section" id="rankingSection">
                 <h2>Ranking</h2>
-                <button id="rankingBtn">Gerar Ranking</button>
+                <button id="rankingBtn" aria-label="Gerar Ranking">Gerar Ranking</button>
                 <div id="ranking"></div>
             </div>
         </section>
     </main>
     <script src="script.js"></script>
+    <footer>
+        <p class="developed-by">Desenvolvido por Antônio Fichina Netto - 2024</p>
+    </footer>
 </body>
 </html>
