@@ -224,3 +224,30 @@ footer {
     color: #b3b3b3; /* Um tom de cinza claro e sutil */
     font-size: 0.9em;
 }
+
+.toggle-resultados {
+    margin-top: 10px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-resultados:hover {
+    background-color: #45a049;
+}
+
+.resultados-container {
+    margin-top: 10px;
+}
+
+.jogo-resultado {
+    margin-bottom: 5px;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}

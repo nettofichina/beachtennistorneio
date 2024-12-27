@@ -149,10 +149,53 @@ verCampeonatosBtn.addEventListener('click', () => {
         const campeonatoDiv = document.createElement('div');
         campeonatoDiv.className = 'campeonato';
 
-        const titulo = document.createElement('span');
+        const titulo = document.createElement('h4');  // Mudando para h4 para melhor semântica
         titulo.textContent = campeonato.torneio;
         campeonatoDiv.appendChild(titulo);
 
+        // Botão para expandir/ocultar resultados
+        const toggleResultadosBtn = document.createElement('button');
+        toggleResultadosBtn.textContent = 'Ver Resultados';
+        toggleResultadosBtn.className = 'toggle-resultados';
+        campeonatoDiv.appendChild(toggleResultadosBtn);
+
+        // Container para os resultados
+        const resultadosContainer = document.createElement('div');
+        resultadosContainer.className = 'resultados-container';
+        resultadosContainer.style.display = 'none';  // Começa oculto
+        campeonatoDiv.appendChild(resultadosContainer);
+
+        toggleResultadosBtn.addEventListener('click', () => {
+            if (resultadosContainer.style.display === 'none') {
+                resultadosContainer.style.display = 'block';
+                toggleResultadosBtn.textContent = 'Ocultar Resultados';
+            } else {
+                resultadosContainer.style.display = 'none';
+                toggleResultadosBtn.textContent = 'Ver Resultados';
+            }
+            
+            // Popula os resultados do campeonato
+            resultadosContainer.innerHTML = '';  // Limpa o conteúdo anterior antes de adicionar novo
+            campeonato.jogos.forEach((jogo) => {
+                const jogoDiv = document.createElement('div');
+                jogoDiv.className = 'jogo-resultado';
+                
+                let resultadoTexto = `${jogo.dupla1.join(' e ')} vs ${jogo.dupla2.join(' e ')}`;
+                if (jogo.placar) {
+                    resultadoTexto += ` - Placar: ${jogo.placar}`;
+                    // Determina o vencedor com base no placar
+                    const [set1, set2] = jogo.placar.split('-').map(Number);
+                    const vencedor = set1 > set2 ? jogo.dupla1 : (set2 > set1 ? jogo.dupla2 : 'Empate');
+                    resultadoTexto += ` (Vencedor: ${vencedor.join(' e ')})`;
+                } else {
+                    resultadoTexto += ' - Sem placar registrado';
+                }
+                jogoDiv.textContent = resultadoTexto;
+                resultadosContainer.appendChild(jogoDiv);
+            });
+        });
+
+        // Adiciona evento de duplo clique para remover o campeonato
         campeonatoDiv.addEventListener('dblclick', (e) => {
             if (confirm('Tem certeza que deseja remover este campeonato?')) {
                 campeonatos.splice(index, 1);
