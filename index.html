@@ -16,6 +16,8 @@
                 <h1>BEM-VINDO!</h1>
                 <label for="nomeTorneio">Nome do Torneio:</label>
                 <input type="text" id="nomeTorneio" placeholder="Digite o nome do torneio" style="text-transform: uppercase;">
+                <label for="dataTorneio">Dia do Torneio:</label>
+                <input type="date" id="dataTorneio">
             </div>
 
             <div class="section" id="jogadores">
@@ -50,6 +52,10 @@
 
             <div class="section" id="rankingSection">
                 <h2>Ranking</h2>
+                <label for="dataInicio">Data Início:</label>
+                <input type="date" id="dataInicio">
+                <label for="dataFim">Data Fim:</label>
+                <input type="date" id="dataFim">
                 <button id="rankingBtn" aria-label="Gerar Ranking">Gerar Ranking</button>
                 <div id="ranking"></div>
             </div>

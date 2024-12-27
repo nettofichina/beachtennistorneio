@@ -1,5 +1,6 @@
 // Seleção de elementos
 const nomeTorneioInput = document.getElementById('nomeTorneio');
+const dataTorneioInput = document.getElementById('dataTorneio');
 const nomeJogadorInput = document.getElementById('nomeJogador');
 const adicionarJogadorBtn = document.getElementById('adicionarJogador');
 const listaJogadores = document.getElementById('listaJogadores');
@@ -9,6 +10,8 @@ const placaresDiv = document.getElementById('placares');
 const salvarCampeonatoBtn = document.getElementById('salvarCampeonato');
 const verCampeonatosBtn = document.getElementById('verCampeonatosBtn');
 const rankingBtn = document.getElementById('rankingBtn');
+const dataInicioInput = document.getElementById('dataInicio');
+const dataFimInput = document.getElementById('dataFim');
 const campeonatosDiv = document.getElementById('campeonatos');
 const rankingDiv = document.getElementById('ranking');
 
@@ -124,13 +127,15 @@ function gerarChaves() {
 // Salvar campeonato
 salvarCampeonatoBtn.addEventListener('click', () => {
     const nomeTorneio = nomeTorneioInput.value.trim();
-    if (!nomeTorneio) {
-        alert('Digite o nome do torneio antes de salvar!');
+    const dataTorneio = dataTorneioInput.value;
+    if (!nomeTorneio || !dataTorneio) {
+        alert('Digite o nome do torneio e a data antes de salvar!');
         return;
     }
 
     const resultados = {
         torneio: nomeTorneio,
+        data: dataTorneio,
         jogadores: jogadores,
         jogos: jogos,
     };
@@ -149,9 +154,13 @@ verCampeonatosBtn.addEventListener('click', () => {
         const campeonatoDiv = document.createElement('div');
         campeonatoDiv.className = 'campeonato';
 
-        const titulo = document.createElement('h4');  // Mudando para h4 para melhor semântica
+        const titulo = document.createElement('h4');
         titulo.textContent = campeonato.torneio;
         campeonatoDiv.appendChild(titulo);
+
+        const dataSpan = document.createElement('p');
+        dataSpan.textContent = `Dia do Torneio: ${campeonato.data}`;
+        campeonatoDiv.appendChild(dataSpan);
 
         // Botão para expandir/ocultar resultados
         const toggleResultadosBtn = document.createElement('button');
@@ -183,7 +192,6 @@ verCampeonatosBtn.addEventListener('click', () => {
                 let resultadoTexto = `${jogo.dupla1.join(' e ')} vs ${jogo.dupla2.join(' e ')}`;
                 if (jogo.placar) {
                     resultadoTexto += ` - Placar: ${jogo.placar}`;
-                    // Determina o vencedor com base no placar
                     const [set1, set2] = jogo.placar.split('-').map(Number);
                     const vencedor = set1 > set2 ? jogo.dupla1 : (set2 > set1 ? jogo.dupla2 : 'Empate');
                     resultadoTexto += ` (Vencedor: ${vencedor.join(' e ')})`;
@@ -210,9 +218,22 @@ verCampeonatosBtn.addEventListener('click', () => {
 
 // Gerar ranking
 rankingBtn.addEventListener('click', () => {
+    const dataInicio = dataInicioInput.value;
+    const dataFim = dataFimInput.value;
+
+    if (!dataInicio || !dataFim) {
+        alert('Por favor, selecione um intervalo de datas para gerar o ranking.');
+        return;
+    }
+
     ranking = {};
 
-    campeonatos.forEach((campeonato) => {
+    campeonatos.filter(campeonato => {
+        const dataCampeonato = new Date(campeonato.data);
+        const inicio = new Date(dataInicio);
+        const fim = new Date(dataFim);
+        return dataCampeonato >= inicio && dataCampeonato <= fim;
+    }).forEach((campeonato) => {
         campeonato.jogos.forEach((jogo) => {
             const { dupla1, dupla2, placar } = jogo;
 
