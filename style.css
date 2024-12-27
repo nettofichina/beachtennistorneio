@@ -251,3 +251,18 @@ footer {
     background-color: #f0f0f0;
     border-radius: 5px;
 }
+
+#ranking div {
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#ranking .position {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* Adicione um pouco de espaço para os emojis */
+#ranking div {
+    padding-left: 30px; /* Ajuste conforme necessário */
+}

@@ -254,7 +254,16 @@ rankingBtn.addEventListener('click', () => {
     rankingDiv.innerHTML = '<h3>Ranking</h3>';
     rankingArray.forEach(([jogador, pontos], index) => {
         const rankItem = document.createElement('div');
-        rankItem.innerHTML = `<span class="position">${index + 1}.</span> ${jogador}: ${pontos} pontos`;
+        let medalha = '';
+        if (index === 0) {
+            medalha = '🥇';
+        } else if (index === 1) {
+            medalha = '🥈';
+        } else if (index === 2) {
+            medalha = '🥉';
+        }
+        
+        rankItem.innerHTML = `<span class="position">${index + 1}.</span> ${medalha} ${jogador}: ${pontos} pontos`;
         rankItem.setAttribute('aria-label', `${jogador} tem ${pontos} pontos e está na posição ${index + 1}.`);
         rankingDiv.appendChild(rankItem);
     });
