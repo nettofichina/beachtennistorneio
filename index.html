@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Beach Tennis</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Gerenciador de Torneios de Beach Tennis</h1>
+    </header>
+    <main class="container">
+        <div class="section" id="torneio">
+            <h1>BEM-VINDO!</h1>
+            <label for="nomeTorneio">Nome do Torneio:</label>
+            <input type="text" id="nomeTorneio" placeholder="Digite o nome do torneio">
+        </div>
+
+        <div class="section" id="jogadores">
+            <label for="nomeJogador">Adicionar Jogador:</label>
+            <input type="text" id="nomeJogador" placeholder="Digite o nome do jogador" style="text-transform: uppercase;" autocapitalize="characters">
+            <button id="adicionarJogador">Adicionar</button>
+            <ul id="listaJogadores" aria-live="polite"></ul>
+        </div>
+
+        <div class="section" id="duplas">
+            <h2>Duplas</h2>
+            <button id="sortearDuplas">Sortear Duplas</button>
+            <div id="chaves" aria-live="polite">
+                <!-- As chaves dos jogos serão exibidas aqui -->
+            </div>
+            <button id="salvarCampeonato">Salvar Campeonato</button>
+        </div>
+
+        </main>
+
+        <main class="container">
+        <div class="section" id="resultadosSection">
+            <h1>RESULTADOS</h1>
+            <div id="placares" aria-live="polite">
+                <!-- Os campos de placares dos jogos serão exibidos aqui -->
+            </div>
+        </div>
+
+        <div class="section" id="campeonatosSection">
+            <button id="verCampeonatosBtn">Ver Campeonatos</button>
+            <div id="campeonatos"></div>
+        </div>
+
+        <div class="section" id="rankingSection">
+            <h2>Ranking</h2>
+            <button id="rankingBtn">Gerar Ranking</button>
+            <div id="ranking"></div>
+        </div>
+    </main>
+</main>
+    <script src="script.js"></script>
+</body>
+</html>
