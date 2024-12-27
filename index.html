@@ -11,50 +11,50 @@
         <h1>Gerenciador de Torneios de Beach Tennis</h1>
     </header>
     <main class="container">
-        <div class="section" id="torneio">
-            <h1>BEM-VINDO!</h1>
-            <label for="nomeTorneio">Nome do Torneio:</label>
-            <input type="text" id="nomeTorneio" placeholder="Digite o nome do torneio">
-        </div>
-
-        <div class="section" id="jogadores">
-            <label for="nomeJogador">Adicionar Jogador:</label>
-            <input type="text" id="nomeJogador" placeholder="Digite o nome do jogador" style="text-transform: uppercase;" autocapitalize="characters">
-            <button id="adicionarJogador">Adicionar</button>
-            <ul id="listaJogadores" aria-live="polite"></ul>
-        </div>
-
-        <div class="section" id="duplas">
-            <h2>Duplas</h2>
-            <button id="sortearDuplas">Sortear Duplas</button>
-            <div id="chaves" aria-live="polite">
-                <!-- As chaves dos jogos serão exibidas aqui -->
+        <section id="bemVindoSection">
+            <div class="section" id="torneio">
+                <h1>BEM-VINDO!</h1>
+                <label for="nomeTorneio">Nome do Torneio:</label>
+                <input type="text" id="nomeTorneio" placeholder="Digite o nome do torneio">
             </div>
-            <button id="salvarCampeonato">Salvar Campeonato</button>
-        </div>
 
-        </main>
-
-        <main class="container">
-        <div class="section" id="resultadosSection">
-            <h1>RESULTADOS</h1>
-            <div id="placares" aria-live="polite">
-                <!-- Os campos de placares dos jogos serão exibidos aqui -->
+            <div class="section" id="jogadores">
+                <label for="nomeJogador">Adicionar Jogador:</label>
+                <input type="text" id="nomeJogador" placeholder="Digite o nome do jogador" style="text-transform: uppercase;" autocapitalize="characters">
+                <button id="adicionarJogador">Adicionar</button>
+                <ul id="listaJogadores" aria-live="polite"></ul>
             </div>
-        </div>
 
-        <div class="section" id="campeonatosSection">
-            <button id="verCampeonatosBtn">Ver Campeonatos</button>
-            <div id="campeonatos"></div>
-        </div>
+            <div class="section" id="duplas">
+                <h2>Duplas</h2>
+                <button id="sortearDuplas">Sortear Duplas</button>
+                <div id="chaves" aria-live="polite">
+                    <!-- As chaves dos jogos serão exibidas aqui -->
+                </div>
+                <button id="salvarCampeonato">Salvar Campeonato</button>
+            </div>
+        </section>
 
-        <div class="section" id="rankingSection">
-            <h2>Ranking</h2>
-            <button id="rankingBtn">Gerar Ranking</button>
-            <div id="ranking"></div>
-        </div>
+        <section id="resultadosSection">
+            <div class="section">
+                <h1>RESULTADOS</h1>
+                <div id="placares" aria-live="polite">
+                    <!-- Os campos de placares dos jogos serão exibidos aqui -->
+                </div>
+            </div>
+
+            <div class="section" id="campeonatosSection">
+                <button id="verCampeonatosBtn">Ver Campeonatos</button>
+                <div id="campeonatos"></div>
+            </div>
+
+            <div class="section" id="rankingSection">
+                <h2>Ranking</h2>
+                <button id="rankingBtn">Gerar Ranking</button>
+                <div id="ranking"></div>
+            </div>
+        </section>
     </main>
-</main>
     <script src="script.js"></script>
 </body>
 </html>
