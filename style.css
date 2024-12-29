@@ -282,3 +282,38 @@ footer {
 #limparCampos:hover {
     background-color: #cc0000; /* Um tom mais escuro de vermelho para o efeito de hover */
 }
+
+/* Ajuste ou adicione estas regras ao seu style.css */
+
+.jogo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Espaço entre os elementos */
+}
+
+.jogo span {
+    width: 100%; /* Garante que os nomes das duplas ocupem toda a largura */
+    text-align: center; /* Centraliza o texto */
+}
+
+.jogo .placar-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.jogo .placar-container input[type="text"] {
+    flex: 1;
+    margin-right: 5px;
+}
+
+.jogo .placar-container button {
+    flex-shrink: 0;
+    white-space: nowrap; /* Impede que o texto do botão quebre linha */
+}
+
+@media (max-width: 768px) {
+    .jogo .placar-container {
+        flex-direction: row; /* Garante que input e botão fiquem na mesma linha em dispositivos menores */
+    }
+}

@@ -136,7 +136,13 @@ function submeterJogo(index, btn, input) {
         if (!jogo.submetido) {
             input.disabled = true;
             jogo.submetido = true;
-            btn.style.display = 'none'; // Esconde o botão após submissão
+            btn.textContent = 'Editar';
+            btn.classList.add('edit-button'); // Adiciona uma classe para estilizar
+        } else {
+            input.disabled = false;
+            jogo.submetido = false;
+            btn.textContent = 'Submeter';
+            btn.classList.remove('edit-button'); // Remove a classe ao voltar para "Submeter"
         }
 
         // Atualizar localStorage com o estado atualizado
