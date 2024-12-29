@@ -14,6 +14,7 @@ const dataInicioInput = document.getElementById('dataInicio');
 const dataFimInput = document.getElementById('dataFim');
 const campeonatosDiv = document.getElementById('campeonatos');
 const rankingDiv = document.getElementById('ranking');
+const limparCamposBtn = document.getElementById('limparCampos');
 
 let jogadores = [];
 let duplas = [];
@@ -26,13 +27,51 @@ function normalizarNome(nome) {
     return nome.toUpperCase().trim();
 }
 
-// Carregar campeonatos salvos do localStorage ao carregar a página
+// Salvar Estado Completo
+window.addEventListener('beforeunload', (e) => {
+    localStorage.setItem('currentState', JSON.stringify({
+        jogadores: jogadores,
+        duplas: duplas,
+        jogos: jogos,
+        nomeTorneio: nomeTorneioInput.value,
+        dataTorneio: dataTorneioInput.value
+    }));
+});
+
+// Carregar campeonatos e estado completo do localStorage ao carregar a página
 document.addEventListener('DOMContentLoaded', () => {
     const savedCampeonatos = localStorage.getItem('campeonatos');
     if (savedCampeonatos) {
         campeonatos = JSON.parse(savedCampeonatos);
     }
+
+    const savedState = localStorage.getItem('currentState');
+    if (savedState) {
+        const { jogadores: savedJogadores, duplas: savedDuplas, jogos: savedJogos, nomeTorneio, dataTorneio } = JSON.parse(savedState);
+        jogadores = savedJogadores;
+        duplas = savedDuplas;
+        jogos = savedJogos;
+        nomeTorneioInput.value = nomeTorneio || '';  // Usar valor salvo ou string vazia
+        dataTorneioInput.value = dataTorneio || '';  // Usar valor salvo ou string vazia
+
+        // Atualizar a lista de jogadores na interface
+        listaJogadores.innerHTML = '';
+        jogadores.forEach(jogador => {
+            const li = document.createElement('li');
+            li.textContent = jogador;
+            li.setAttribute('aria-label', `Jogador: ${jogador}`);
+            li.setAttribute('role', 'listitem');
+            li.addEventListener('dblclick', () => removerJogador(jogador, li));
+            listaJogadores.appendChild(li);
+        });
+
+        // Gerar chaves e restaurar estado dos jogos submetidos
+        if (duplas.length) {
+            gerarChaves();
+        }
+    }
 });
+
 
 // Adicionar jogador ao pressionar Enter
 nomeJogadorInput.addEventListener('keypress', (e) => {
@@ -77,26 +116,64 @@ sortearDuplasBtn.addEventListener('click', () => {
         return;
     }
 
-    const jogadoresEmbaralhados = jogadores.sort(() => Math.random() - 0.5);
+    // Embaralhar jogadores e criar duplas
+    const jogadoresEmbaralhados = [...jogadores].sort(() => Math.random() - 0.5);
     duplas = [];
     for (let i = 0; i < jogadoresEmbaralhados.length; i += 2) {
         duplas.push([jogadoresEmbaralhados[i], jogadoresEmbaralhados[i + 1]]);
     }
 
+    // Atualiza apenas as chaves com as novas duplas
     gerarChaves();
 });
 
+
+function submeterJogo(index, btn, input) {
+    const jogo = jogos[index];
+    const placar = jogo.placar;
+
+    if (/^\d+-\d+$/.test(placar)) {
+        if (!jogo.submetido) {
+            input.disabled = true;
+            jogo.submetido = true;
+            btn.style.display = 'none'; // Esconde o botão após submissão
+        }
+
+        // Atualizar localStorage com o estado atualizado
+        localStorage.setItem('currentState', JSON.stringify({
+            jogadores: jogadores,
+            duplas: duplas,
+            jogos: jogos,
+            nomeTorneio: nomeTorneioInput.value,
+            dataTorneio: dataTorneioInput.value
+        }));
+    } else {
+        alert('Formato de placar inválido. Use "X-Y", por exemplo, "6-1".');
+    }
+}
+
 function gerarChaves() {
+    // Limpa as chaves e jogos para evitar duplicação
     chavesDiv.innerHTML = '';
     placaresDiv.innerHTML = '';
-    jogos = [];
+    const novosJogos = [];
 
+    // Cria jogos a partir das duplas
     for (let i = 0; i < duplas.length; i++) {
         for (let j = i + 1; j < duplas.length; j++) {
-            jogos.push({ dupla1: duplas[i], dupla2: duplas[j], placar: '' });
+            const jogoExistente = jogos.find(j => 
+                j.dupla1.toString() === duplas[i].toString() &&
+                j.dupla2.toString() === duplas[j].toString()
+            );
+            if (!jogoExistente) {
+                novosJogos.push({ dupla1: duplas[i], dupla2: duplas[j], placar: '', submetido: false });
+            }
         }
     }
 
+    jogos = novosJogos;
+
+    // Renderiza os jogos na interface
     jogos.forEach((jogo, index) => {
         const jogoDiv = document.createElement('div');
         jogoDiv.className = 'jogo';
@@ -108,6 +185,8 @@ function gerarChaves() {
         inputPlacar.type = 'text';
         inputPlacar.placeholder = 'Placar (ex: 6-1)';
         inputPlacar.dataset.index = index;
+        inputPlacar.value = jogo.placar;
+        inputPlacar.disabled = jogo.submetido;
         inputPlacar.addEventListener('change', (e) => {
             const placar = e.target.value;
             if (/^\d+-\d+$/.test(placar)) {
@@ -118,11 +197,73 @@ function gerarChaves() {
             }
         });
 
+        const submeterBtn = document.createElement('button');
+        submeterBtn.textContent = 'Submeter';
+        submeterBtn.className = 'submeter-jogo';
+        submeterBtn.style.display = jogo.submetido ? 'none' : 'inline';
+        submeterBtn.addEventListener('click', () => {
+            submeterJogo(index, submeterBtn, inputPlacar, jogoDiv);
+        });
+
+        // Adiciona o botão "Editar"
+        const editarBtn = document.createElement('button');
+        editarBtn.textContent = 'Editar';
+        editarBtn.className = 'editar-placar';
+        editarBtn.style.display = jogo.submetido ? 'inline' : 'none'; // Mostrar o botão "Editar" apenas se o placar foi submetido
+        editarBtn.addEventListener('click', () => {
+            inputPlacar.disabled = false;
+            jogo.submetido = false;
+            submeterBtn.style.display = 'inline';
+            editarBtn.style.display = 'none';
+        });
+
         jogoDiv.appendChild(jogoInfo);
         jogoDiv.appendChild(inputPlacar);
+        jogoDiv.appendChild(submeterBtn);
+        jogoDiv.appendChild(editarBtn);
         chavesDiv.appendChild(jogoDiv);
     });
+
+    // Atualiza o estado no localStorage
+    localStorage.setItem('currentState', JSON.stringify({
+        jogadores: jogadores,
+        duplas: duplas,
+        jogos: jogos,
+        nomeTorneio: nomeTorneioInput.value,
+        dataTorneio: dataTorneioInput.value
+    }));
 }
+
+function submeterJogo(index, btn, input, jogoDiv) {
+    const jogo = jogos[index];
+    const placar = jogo.placar;
+
+    if (/^\d+-\d+$/.test(placar)) {
+        if (!jogo.submetido) {
+            input.disabled = true;
+            jogo.submetido = true;
+            btn.style.display = 'none'; 
+
+            // Mostrar o botão "Editar"
+            const editarBtn = jogoDiv.querySelector('.editar-placar');
+            if (editarBtn) {
+                editarBtn.style.display = 'inline';
+            }
+        }
+
+        // Atualizar localStorage com o estado atualizado
+        localStorage.setItem('currentState', JSON.stringify({
+            jogadores: jogadores,
+            duplas: duplas,
+            jogos: jogos,
+            nomeTorneio: nomeTorneioInput.value,
+            dataTorneio: dataTorneioInput.value
+        }));
+    } else {
+        alert('Formato de placar inválido. Use "X-Y", por exemplo, "6-1".');
+    }
+}
+
 
 // Salvar campeonato
 salvarCampeonatoBtn.addEventListener('click', () => {
@@ -144,6 +285,21 @@ salvarCampeonatoBtn.addEventListener('click', () => {
     localStorage.setItem('campeonatos', JSON.stringify(campeonatos));
     console.log('Campeonato salvo:', resultados);
     alert('Campeonato salvo com sucesso! Confira os dados no console.');
+
+    // Limpar o estado temporário do localStorage após salvar o campeonato
+    localStorage.removeItem('currentState');
+
+    // Limpar todos os campos e arrays
+    jogadores = [];
+    duplas = [];
+    jogos = [];
+    listaJogadores.innerHTML = '';
+    chavesDiv.innerHTML = '';
+    placaresDiv.innerHTML = '';
+    nomeTorneioInput.value = '';
+    dataTorneioInput.value = '';
+    nomeJogadorInput.value = '';
+    nomeJogadorInput.focus(); // Coloca o foco de volta no input do jogador
 });
 
 // Ver campeonatos
@@ -267,4 +423,62 @@ rankingBtn.addEventListener('click', () => {
         rankItem.setAttribute('aria-label', `${jogador} tem ${pontos} pontos e está na posição ${index + 1}.`);
         rankingDiv.appendChild(rankItem);
     });
+});
+
+// Limpar todos os campos
+limparCamposBtn.addEventListener('click', () => {
+    if (confirm('Tem certeza que deseja limpar todos os campos?')) {
+        // Limpar apenas os campos e o estado atual
+        jogadores = [];
+        duplas = [];
+        jogos = [];
+        listaJogadores.innerHTML = '';
+        chavesDiv.innerHTML = '';
+        placaresDiv.innerHTML = '';
+        nomeTorneioInput.value = '';
+        dataTorneioInput.value = '';
+        nomeJogadorInput.value = '';
+        rankingDiv.innerHTML = ''; // Limpa o ranking exibido, mas não afeta a funcionalidade
+        campeonatosDiv.innerHTML = ''; // Limpa os campeonatos exibidos, mas não afeta os dados salvos
+        
+        // Limpar apenas o estado temporário do localStorage
+        localStorage.removeItem('currentState');
+        
+        // Reiniciar foco
+        nomeJogadorInput.focus();
+    }
+});
+
+// Carregar campeonatos e estado completo do localStorage ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+    const savedCampeonatos = localStorage.getItem('campeonatos');
+    if (savedCampeonatos) {
+        campeonatos = JSON.parse(savedCampeonatos);
+    }
+
+    const savedState = localStorage.getItem('currentState');
+    if (savedState) {
+        const { jogadores: savedJogadores, duplas: savedDuplas, jogos: savedJogos, nomeTorneio, dataTorneio } = JSON.parse(savedState);
+        jogadores = savedJogadores;
+        duplas = savedDuplas;
+        jogos = savedJogos;
+        nomeTorneioInput.value = nomeTorneio || '';  // Usar valor salvo ou string vazia
+        dataTorneioInput.value = dataTorneio || '';  // Usar valor salvo ou string vazia
+
+        // Atualizar a lista de jogadores na interface
+        listaJogadores.innerHTML = '';
+        jogadores.forEach(jogador => {
+            const li = document.createElement('li');
+            li.textContent = jogador;
+            li.setAttribute('aria-label', `Jogador: ${jogador}`);
+            li.setAttribute('role', 'listitem');
+            li.addEventListener('dblclick', () => removerJogador(jogador, li));
+            listaJogadores.appendChild(li);
+        });
+
+        // Gerar chaves e restaurar estado dos jogos submetidos
+        if (duplas.length) {
+            gerarChaves();
+        }
+    }
 });

@@ -201,7 +201,7 @@ ul li {
 #bemVindoSection {
     /* Estilos específicos para a seção de Bem-Vindo */
     border-bottom: 1px solid #e0e0e0; /* Linha divisória opcional */
-    padding-bottom: 20px; /* Espaço adicional antes da seção de resultados */
+    padding-bottom: 50px; /* Espaço adicional antes da seção de resultados */
 }
 
 #resultadosSection {
@@ -221,7 +221,7 @@ footer {
 }
 
 .developed-by {
-    color: #b3b3b3; /* Um tom de cinza claro e sutil */
+    color: #b3b3b3; /* Tom de cinza claro e sutil */
     font-size: 0.9em;
 }
 
@@ -265,4 +265,20 @@ footer {
 /* Adicione um pouco de espaço para os emojis */
 #ranking div {
     padding-left: 30px; /* Ajuste conforme necessário */
+}
+
+#limparCampos {
+    background-color: #cf0f0f; /* Vermelho */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+}
+
+#limparCampos:hover {
+    background-color: #cc0000; /* Um tom mais escuro de vermelho para o efeito de hover */
 }
