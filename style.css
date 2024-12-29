@@ -288,12 +288,11 @@ footer {
 .jogo {
     display: flex;
     flex-direction: column;
-    gap: 5px; /* Espaço entre os elementos */
 }
 
 .jogo span {
-    width: 100%; /* Garante que os nomes das duplas ocupem toda a largura */
-    text-align: center; /* Centraliza o texto */
+    width: 100%;
+    text-align: center;
 }
 
 .jogo .placar-container {
@@ -309,11 +308,18 @@ footer {
 
 .jogo .placar-container button {
     flex-shrink: 0;
-    white-space: nowrap; /* Impede que o texto do botão quebre linha */
 }
 
 @media (max-width: 768px) {
     .jogo .placar-container {
         flex-direction: row; /* Garante que input e botão fiquem na mesma linha em dispositivos menores */
+    }
+    
+    .jogo .placar-container input[type="text"] {
+        margin-bottom: 0; /* Remove margem inferior para manter elementos lado a lado */
+    }
+
+    .jogo .placar-container button {
+        margin-top: 0; /* Remove margem superior para manter elementos lado a lado */
     }
 }
