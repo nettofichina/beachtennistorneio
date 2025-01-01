@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Beach Tennis</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Gerenciador de Torneios de Beach Tennis</h1>
+    </header>
+    <main class="container">
+        <section id="bemVindoSection">
+            <div class="section" id="torneio">
+                <h1>INFORMAÇÕES DO TORNEIO</h1>
+                <label for="nomeTorneio">Nome do Torneio:</label>
+                <input type="text" id="nomeTorneio" placeholder="Digite o nome do torneio" style="text-transform: uppercase;">
+                <label for="dataTorneio">Dia do Torneio:</label>
+                <input type="date" id="dataTorneio">
+            </div>
+
+            <div class="section" id="duplasAleatorias">
+                <h2>Informar Jogadores Aleatorios</h2>
+                <div class="section" id="jogadores">
+                    <label for="nomeJogador">Adicionar Jogador:</label>
+                    <input type="text" id="nomeJogador" placeholder="Digite o nome do jogador" style="text-transform: uppercase;">
+                    <button id="adicionarJogador" aria-label="Adicionar Jogador">Adicionar</button>
+                    <ul id="listaJogadores" aria-live="polite"></ul>
+                </div>
+
+                <div class="section" id="duplas">
+                    <button id="sortearDuplas" aria-label="Sortear Duplas">Sortear Duplas</button>
+                    <div id="chaves" aria-live="polite">
+                        <!-- As chaves dos jogos serão exibidas aqui -->
+                    </div>
+                </div>
+                <button id="salvarCampeonato" aria-label="Salvar Torneio" style="background-color: #4CAF50; color: white;">Salvar Torneio</button>
+                <button id="voltarParaHome" aria-label="Voltar para Início">Voltar para Início</button>
+            </div>
+        </section>
+    </main>
+    <script src="duplas-aleatorias.js"></script>
+    <footer>
+        <p class="developed-by">Desenvolvido por Antônio Fichina Netto - 2024</p>
+    </footer>
+</body>
+</html>

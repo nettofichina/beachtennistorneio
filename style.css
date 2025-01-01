@@ -97,6 +97,12 @@ ul li {
     cursor: pointer; /* Adicionando cursor para melhorar interatividade */
 }
 
+.divisoria-resultados {
+    width: 100%;
+    border-top: 2px solid #e0e0e0; /* Cor e estilo da linha conforme preferência */
+    margin: 50 px 0; /* Margem acima e abaixo da linha */
+}
+
 .section {
     margin-top: 30px;
 }
@@ -114,27 +120,53 @@ ul li {
         width: 100%;
         text-align: center;
     }
+
+    .jogo .placar-container {
+        flex-direction: row;
+    }
+    .jogo .placar-container input[type="text"] {
+        margin-bottom: 0;
+    }
+    .jogo .placar-container button {
+        margin-top: 0;
+    }
 }
 
 /* Para o container de cada jogo */
 .jogo {
     display: flex;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 10px;
 }
 
-/* Para o texto da dupla */
 .jogo span {
-    flex: 1;
-    margin-right: 10px;
+    width: 100%;
+    text-align: center;
 }
 
-/* Para o campo de entrada de placar */
-.jogo input[type="text"], .jogo input[type="tel"] {
-    width: 150px;
-    height: 50px;
-    padding: 10px;
-    margin: 0 auto;
+.jogo .placar-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.jogo .placar-container input[type="text"] {
+    flex: 1;
+    margin-right: 5px;
+}
+
+.jogo .placar-container button {
+    flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+    .jogo {
+        flex-direction: column;
+    }
+    .jogo span, .jogo input[type="text"], .jogo button {
+        width: 100%;
+    }
 }
 
 /* Melhorias no Ranking e Campeonatos */
@@ -174,16 +206,6 @@ ul li {
     }
 }
 
-@media (max-width: 480px) {
-    .jogo {
-        flex-direction: column;
-    }
-    .jogo span, .jogo input[type="text"], .jogo input[type="tel"] {
-        width: 100%;
-        margin: 5px 0;
-    }
-}
-
 /* Para garantir que o texto do input seja em maiúsculas */
 #nomeJogador {
     text-transform: uppercase;
@@ -199,13 +221,11 @@ ul li {
 }
 
 #bemVindoSection {
-    /* Estilos específicos para a seção de Bem-Vindo */
     border-bottom: 1px solid #e0e0e0; /* Linha divisória opcional */
     padding-bottom: 50px; /* Espaço adicional antes da seção de resultados */
 }
 
 #resultadosSection {
-    /* Estilos específicos para a seção de Resultados */
     margin-top: 20px; /* Espaço adicional após a seção de Bem-Vindo */
 }
 
@@ -253,18 +273,7 @@ footer {
 }
 
 #ranking div {
-    padding: 10px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-#ranking .position {
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-/* Adicione um pouco de espaço para os emojis */
-#ranking div {
-    padding-left: 30px; /* Ajuste conforme necessário */
+    padding-left: 30px; /* Adicione um pouco de espaço para os emojis */
 }
 
 #limparCampos {
@@ -283,43 +292,88 @@ footer {
     background-color: #cc0000; /* Um tom mais escuro de vermelho para o efeito de hover */
 }
 
-/* Ajuste ou adicione estas regras ao seu style.css */
-
-.jogo {
+.button-group {
     display: flex;
-    flex-direction: column;
-}
-
-.jogo span {
-    width: 100%;
-    text-align: center;
-}
-
-.jogo .placar-container {
-    display: flex;
+    justify-content: center;
     align-items: center;
     width: 100%;
+    margin-top: 20px;
+    gap: 20px; /* Espaçamento entre os botões */
 }
 
-.jogo .placar-container input[type="text"] {
-    flex: 1;
-    margin-right: 5px;
+/* Estilo para o botão 'Limpar Todos os Campos' e 'Informar Duplas Manualmente' */
+#limparCampos, #informarDuplas {
+    /* Estilo específico se necessário */
 }
 
-.jogo .placar-container button {
-    flex-shrink: 0;
+#informarDuplas {
+    background-color: #FFA500; /* Laranja */
+    color: white;
 }
 
-@media (max-width: 768px) {
-    .jogo .placar-container {
-        flex-direction: row; /* Garante que input e botão fiquem na mesma linha em dispositivos menores */
-    }
-    
-    .jogo .placar-container input[type="text"] {
-        margin-bottom: 0; /* Remove margem inferior para manter elementos lado a lado */
-    }
+#informarDuplas:hover {
+    background-color: #FF8C00; /* Laranja mais escuro para efeito de hover */
+}
 
-    .jogo .placar-container button {
-        margin-top: 0; /* Remove margem superior para manter elementos lado a lado */
-    }
+.welcome-section {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.welcome-section .section {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.welcome-section h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.welcome-section p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+/* Botão para voltar à página inicial */
+#voltarParaHome {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#voltarParaHome:hover {
+    background-color: var(--button-hover-color);
+}
+
+.salvar-torneio {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center; /* Centraliza os botões horizontalmente */
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    gap: 20px; /* Espaçamento entre os botões */
+}
+
+#salvarCampeonato, #voltarParaHome {
+    /* Estilo comum para os botões */
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#voltarParaHome {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#voltarParaHome:hover {
+    background-color: var(--button-hover-color);
 }

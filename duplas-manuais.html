@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Beach Tennis - Duplas Manuais</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Gerenciador de Torneios de Beach Tennis</h1>
+    </header>
+    <main class="container">
+        <section id="duplasManuaisSection">
+            <div class="section" id="torneioInfo">
+                <h1>INFORMAÇÕES DO TORNEIO</h1>
+                <label for="nomeTorneio">Nome do Torneio:</label>
+                <input type="text" id="nomeTorneio" placeholder="Digite o nome do torneio" style="text-transform: uppercase;">
+                <label for="dataTorneio">Dia do Torneio:</label>
+                <input type="date" id="dataTorneio">
+            </div>
+            <div class="section" id="duplasManuais">
+                <h2>Informar Duplas Manualmente</h2>
+                <div id="duplaInput">
+                    <label for="jogador1">Informar Jogador:</label>
+                    <input type="text" id="jogador1" placeholder="Digite o nome do jogador" style="text-transform: uppercase;">
+                    <label for="jogador2">Informar Jogador:</label>
+                    <input type="text" id="jogador2" placeholder="Digite o nome do jogador" style="text-transform: uppercase;">
+                    <button id="submeterDupla">Submeter Dupla</button>
+                </div>
+                <label for="melhorDeTres"><input type="checkbox" id="melhorDeTres"> Melhor de 3</label>
+                <ul id="duplasListadas"></ul>
+                <button id="sortearDuplasManuais">Sortear Duplas Aleatoriamente</button>
+                <div id="chavesManuais"></div>
+                <button id="salvarTorneioManual" aria-label="Salvar Torneio" style="background-color: #4CAF50; color: white;">Salvar Torneio</button>
+                <button id="voltarParaHome">Voltar para Início</button>
+            </div>
+        </section>
+    </main>
+    <script src="duplas-manuais.js"></script>
+    <footer>
+        <p class="developed-by">Desenvolvido por Antônio Fichina Netto - 2024</p>
+    </footer>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciador de Beach Tennis</title>
+    <title>Início - Gerenciador de Beach Tennis</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,30 +11,19 @@
         <h1>Gerenciador de Torneios de Beach Tennis</h1>
     </header>
     <main class="container">
-        <section id="bemVindoSection">
-            <div class="section" id="torneio">
-                <h1>BEM-VINDO!</h1>
-                <label for="nomeTorneio">Nome do Torneio:</label>
-                <input type="text" id="nomeTorneio" placeholder="Digite o nome do torneio" style="text-transform: uppercase;">
-                <label for="dataTorneio">Dia do Torneio:</label>
-                <input type="date" id="dataTorneio">
-            </div>
-
-            <div class="section" id="jogadores">
-                <label for="nomeJogador">Adicionar Jogador:</label>
-                <input type="text" id="nomeJogador" placeholder="Digite o nome do jogador" style="text-transform: uppercase;">
-                <button id="adicionarJogador" aria-label="Adicionar Jogador">Adicionar</button>
-                <ul id="listaJogadores" aria-live="polite"></ul>
-            </div>
-
-            <div class="section" id="duplas">
-                <button id="sortearDuplas" aria-label="Sortear Duplas">Sortear Duplas</button>
-                <div id="chaves" aria-live="polite">
-                    <!-- As chaves dos jogos serão exibidas aqui -->
+        <section class="welcome-section">
+            <div class="section">
+                <h2>Bem-vindo ao Gerenciador de Beach Tennis!</h2>
+                <p>Escolha a opção para organizar seu torneio:</p>
+                <div class="button-group">
+                    <button id="informarDuplas" aria-label="Informar Duplas Manualmente" style="background-color: #FFA500; color: white;">Informar Duplas Manualmente</button>
+                    <button id="sortearDuplas" aria-label="Sortear Duplas Aleatoriamente">Sortear Duplas Aleatoriamente</button>
                 </div>
-                <button id="salvarCampeonato" aria-label="Salvar Campeonato">Salvar Campeonato</button>
             </div>
         </section>
+        
+        <!-- Adicionar linha divisória -->
+        <hr class="divisoria-resultados">
 
         <section id="resultadosSection">
             <div class="section">
@@ -60,8 +49,7 @@
             </div>
         </section>
     </main>
-    <button id="limparCampos" aria-label="Limpar Todos os Campos">Limpar Todos os Campos</button>
-    <script src="script.js"></script>
+    <script src="home.js"></script>
     <footer>
         <p class="developed-by">Desenvolvido por Antônio Fichina Netto - 2024</p>
     </footer>
