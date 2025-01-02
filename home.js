@@ -97,12 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const rankingDiv = document.getElementById('ranking');
         if (rankingDiv) {
             let ranking = {};
-
+    
             if (!dataInicio || !dataFim) {
                 alert('Por favor, selecione um intervalo de datas para gerar o ranking.');
                 return;
             }
-
+    
             campeonatos.filter(campeonato => {
                 const dataCampeonato = new Date(campeonato.data);
                 const inicio = new Date(dataInicio);
@@ -111,23 +111,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }).forEach((campeonato) => {
                 campeonato.jogos.forEach((jogo) => {
                     const { dupla1, dupla2, placar } = jogo;
-
+    
                     if (placar) {
                         const [set1, set2] = placar.split('-').map(Number);
                         const pontos = set1 - set2;
-
+    
                         [...dupla1, ...dupla2].forEach((jogador) => {
                             const nomeNormalizado = jogador.toUpperCase().trim();
-                            ranking[nomeNormalizado] = (ranking[nomeNormalizado] || 0) + (dupla1.includes(jogador) ? pontos : -pontos);
+                            ranking[nomeNormalizado] = ranking[nomeNormalizado] || { pontos: 0, jogos: 0 };
+                            ranking[nomeNormalizado].pontos += (dupla1.includes(jogador) ? pontos : -pontos);
+                            ranking[nomeNormalizado].jogos++;
                         });
                     }
                 });
             });
-
-            const rankingArray = Object.entries(ranking).sort((a, b) => b[1] - a[1]);
-
+    
+            const rankingArray = Object.entries(ranking).sort((a, b) => b[1].pontos - a[1].pontos);
+    
             rankingDiv.innerHTML = '<h3>Ranking</h3>';
-            rankingArray.forEach(([jogador, pontos], index) => {
+            rankingArray.forEach(([jogador, { pontos, jogos }], index) => {
                 const rankItem = document.createElement('div');
                 let medalha = '';
                 if (index === 0) {
@@ -138,15 +140,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     medalha = '🥉';
                 }
                 
-                rankItem.innerHTML = `<span class="position">${index + 1}.</span> ${medalha} ${jogador}: ${pontos} pontos`;
-                rankItem.setAttribute('aria-label', `${jogador} tem ${pontos} pontos e está na posição ${index + 1}.`);
+                rankItem.innerHTML = `
+                    <span class="position">${index + 1}.</span> 
+                    ${medalha} ${jogador}: ${pontos} pontos 
+                    <span class="jogos-info">(${jogos} jogos)</span>
+                `;
+                rankItem.setAttribute('aria-label', `${jogador} tem ${pontos} pontos e ${jogos} jogos e está na posição ${index + 1}.`);
                 rankingDiv.appendChild(rankItem);
             });
         } else {
             console.error('Elemento com ID "ranking" não encontrado');
         }
     });
-
+    
     // Função para exportar dados
     document.getElementById('exportarDados').addEventListener('click', exportarDados);
     document.getElementById('exportarDados').addEventListener('touchstart', exportarDados);

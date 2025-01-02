@@ -133,6 +133,12 @@ ul li {
     }
 }
 
+.jogos-info {
+    color: #aaaaaa; /* Cinza claro */
+    font-size: 0.9em;
+    margin-left: 5px; /* Espaço entre os pontos e a informação de jogos */
+}
+
 /* Para o container de cada jogo */
 .jogo {
     display: flex;
