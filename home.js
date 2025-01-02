@@ -177,3 +177,23 @@ document.addEventListener('DOMContentLoaded', () => {
         input.click();
     });
 });
+
+document.getElementById('exportarDados').addEventListener('click', exportarDados);
+document.getElementById('exportarDados').addEventListener('touchstart', exportarDados);
+
+document.getElementById('importarDados').addEventListener('click', importarDados);
+document.getElementById('importarDados').addEventListener('touchstart', importarDados);
+
+function exportarDados() {
+    const dados = {
+        campeonatos: JSON.parse(localStorage.getItem('campeonatos') || '[]'),
+    };
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dados, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "dados_beach_tennis.json");
+    downloadAnchorNode.setAttribute("target", "_blank"); // Abre em nova aba
+    document.body.appendChild(downloadAnchorNode); 
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+}
