@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Navegação para outras páginas
     document.getElementById('informarDuplas').addEventListener('click', () => {
         window.location.href = 'duplas-manuais.html';
     });
@@ -6,48 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('sortearDuplas').addEventListener('click', () => {
         window.location.href = 'duplas-aleatorias.html';
     });
-
-    document.getElementById('exportarDados').addEventListener('click', exportarDados);
-
-    document.getElementById('importarDados').addEventListener('click', importarDados);
-
-    function exportarDados() {
-        const dados = {
-            campeonatos: JSON.parse(localStorage.getItem('campeonatos') || '[]'),
-        };
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dados, null, 2));
-        const downloadAnchorNode = document.createElement('a');
-        downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute("download", "dados_beach_tennis.json");
-        document.body.appendChild(downloadAnchorNode); // necessário para Firefox
-        downloadAnchorNode.click();
-        downloadAnchorNode.remove();
-    }
-
-    function importarDados() {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.json';
-        input.onchange = (e) => {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                try {
-                    const dadosImportados = JSON.parse(event.target.result);
-                    if (dadosImportados.campeonatos) {
-                        localStorage.setItem('campeonatos', JSON.stringify(dadosImportados.campeonatos));
-                        alert('Dados importados com sucesso!');
-                    } else {
-                        alert('Arquivo inválido ou dados corrompidos.');
-                    }
-                } catch (error) {
-                    alert('Erro ao importar dados: ' + error.message);
-                }
-            };
-            reader.readAsText(file);
-        };
-        input.click();
-    }
 
     // Funções para gerenciar campeonatos e ranking
     let campeonatos = JSON.parse(localStorage.getItem('campeonatos') || '[]');
@@ -176,5 +135,45 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             console.error('Elemento com ID "ranking" não encontrado');
         }
+    });
+
+    // Função para exportar dados
+    document.getElementById('exportarDados').addEventListener('click', () => {
+        const dados = {
+            campeonatos: JSON.parse(localStorage.getItem('campeonatos') || '[]'),
+        };
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dados, null, 2));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", "dados_beach_tennis.json");
+        document.body.appendChild(downloadAnchorNode); // necessário para Firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+    });
+
+    // Função para importar dados
+    document.getElementById('importarDados').addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const dadosImportados = JSON.parse(event.target.result);
+                    if (dadosImportados.campeonatos) {
+                        localStorage.setItem('campeonatos', JSON.stringify(dadosImportados.campeonatos));
+                        alert('Dados importados com sucesso!');
+                    } else {
+                        alert('Arquivo inválido ou dados corrompidos.');
+                    }
+                } catch (error) {
+                    alert('Erro ao importar dados: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        };
+        input.click();
     });
 });
