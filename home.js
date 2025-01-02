@@ -11,73 +11,83 @@ document.addEventListener('DOMContentLoaded', () => {
     // Funções para gerenciar campeonatos e ranking
     let campeonatos = JSON.parse(localStorage.getItem('campeonatos') || '[]');
 
+    const campeonatosDiv = document.getElementById('campeonatos');
+    const verCampeonatosBtn = document.getElementById('verCampeonatosBtn');
+
     document.getElementById('verCampeonatosBtn').addEventListener('click', () => {
-        const campeonatosDiv = document.getElementById('campeonatos');
-        if (campeonatosDiv) {
-            campeonatosDiv.innerHTML = '';
+        if (verCampeonatosBtn.textContent === 'Ver Campeonatos') {
+            verCampeonatosBtn.textContent = 'Ocultar Campeonatos';
+            if (campeonatosDiv) {
+                campeonatosDiv.innerHTML = '';
 
-            campeonatos.forEach((campeonato, index) => {
-                const campeonatoDiv = document.createElement('div');
-                campeonatoDiv.className = 'campeonato';
+                campeonatos.forEach((campeonato, index) => {
+                    const campeonatoDiv = document.createElement('div');
+                    campeonatoDiv.className = 'campeonato';
 
-                const titulo = document.createElement('h4');
-                titulo.textContent = campeonato.torneio;
-                campeonatoDiv.appendChild(titulo);
+                    const titulo = document.createElement('h4');
+                    titulo.textContent = campeonato.torneio;
+                    campeonatoDiv.appendChild(titulo);
 
-                const dataSpan = document.createElement('p');
-                dataSpan.textContent = `Dia do Torneio: ${campeonato.data}`;
-                campeonatoDiv.appendChild(dataSpan);
+                    const dataSpan = document.createElement('p');
+                    dataSpan.textContent = `Dia do Torneio: ${campeonato.data}`;
+                    campeonatoDiv.appendChild(dataSpan);
 
-                const toggleResultadosBtn = document.createElement('button');
-                toggleResultadosBtn.textContent = 'Ver Resultados';
-                toggleResultadosBtn.className = 'toggle-resultados';
-                campeonatoDiv.appendChild(toggleResultadosBtn);
+                    const toggleResultadosBtn = document.createElement('button');
+                    toggleResultadosBtn.textContent = 'Ver Resultados';
+                    toggleResultadosBtn.className = 'toggle-resultados';
+                    campeonatoDiv.appendChild(toggleResultadosBtn);
 
-                const resultadosContainer = document.createElement('div');
-                resultadosContainer.className = 'resultados-container';
-                resultadosContainer.style.display = 'none';
-                campeonatoDiv.appendChild(resultadosContainer);
+                    const resultadosContainer = document.createElement('div');
+                    resultadosContainer.className = 'resultados-container';
+                    resultadosContainer.style.display = 'none';
+                    campeonatoDiv.appendChild(resultadosContainer);
 
-                toggleResultadosBtn.addEventListener('click', () => {
-                    if (resultadosContainer.style.display === 'none') {
-                        resultadosContainer.style.display = 'block';
-                        toggleResultadosBtn.textContent = 'Ocultar Resultados';
-                    } else {
-                        resultadosContainer.style.display = 'none';
-                        toggleResultadosBtn.textContent = 'Ver Resultados';
-                    }
-                    
-                    resultadosContainer.innerHTML = '';
-                    campeonato.jogos.forEach((jogo) => {
-                        const jogoDiv = document.createElement('div');
-                        jogoDiv.className = 'jogo-resultado';
-                        
-                        let resultadoTexto = `${jogo.dupla1.join(' e ')} vs ${jogo.dupla2.join(' e ')}`;
-                        if (jogo.placar) {
-                            resultadoTexto += ` - Placar: ${jogo.placar}`;
-                            const [set1, set2] = jogo.placar.split('-').map(Number);
-                            const vencedor = set1 > set2 ? jogo.dupla1 : (set2 > set1 ? jogo.dupla2 : 'Empate');
-                            resultadoTexto += ` (Vencedor: ${vencedor.join(' e ')})`;
+                    toggleResultadosBtn.addEventListener('click', () => {
+                        if (resultadosContainer.style.display === 'none') {
+                            resultadosContainer.style.display = 'block';
+                            toggleResultadosBtn.textContent = 'Ocultar Resultados';
                         } else {
-                            resultadoTexto += ' - Sem placar registrado';
+                            resultadosContainer.style.display = 'none';
+                            toggleResultadosBtn.textContent = 'Ver Resultados';
                         }
-                        jogoDiv.textContent = resultadoTexto;
-                        resultadosContainer.appendChild(jogoDiv);
+                        
+                        resultadosContainer.innerHTML = '';
+                        campeonato.jogos.forEach((jogo) => {
+                            const jogoDiv = document.createElement('div');
+                            jogoDiv.className = 'jogo-resultado';
+                            
+                            let resultadoTexto = `${jogo.dupla1.join(' e ')} vs ${jogo.dupla2.join(' e ')}`;
+                            if (jogo.placar) {
+                                resultadoTexto += ` - Placar: ${jogo.placar}`;
+                                const [set1, set2] = jogo.placar.split('-').map(Number);
+                                const vencedor = set1 > set2 ? jogo.dupla1 : (set2 > set1 ? jogo.dupla2 : 'Empate');
+                                resultadoTexto += ` (Vencedor: ${vencedor.join(' e ')})`;
+                            } else {
+                                resultadoTexto += ' - Sem placar registrado';
+                            }
+                            jogoDiv.textContent = resultadoTexto;
+                            resultadosContainer.appendChild(jogoDiv);
+                        });
                     });
-                });
 
-                campeonatoDiv.addEventListener('dblclick', (e) => {
-                    if (confirm('Tem certeza que deseja remover este campeonato?')) {
-                        campeonatos.splice(index, 1);
-                        localStorage.setItem('campeonatos', JSON.stringify(campeonatos));
-                        document.getElementById('verCampeonatosBtn').click(); // Re-rendereizar a lista de campeonatos
-                    }
-                });
+                    campeonatoDiv.addEventListener('dblclick', (e) => {
+                        if (confirm('Tem certeza que deseja remover este campeonato?')) {
+                            campeonatos.splice(index, 1);
+                            localStorage.setItem('campeonatos', JSON.stringify(campeonatos));
+                            verCampeonatosBtn.click(); // Atualiza a lista após remover
+                        }
+                    });
 
-                campeonatosDiv.appendChild(campeonatoDiv);
-            });
+                    campeonatosDiv.appendChild(campeonatoDiv);
+                });
+            } else {
+                console.error('Elemento com ID "campeonatos" não encontrado');
+            }
         } else {
-            console.error('Elemento com ID "campeonatos" não encontrado');
+            verCampeonatosBtn.textContent = 'Ver Campeonatos';
+            if (campeonatosDiv) {
+                campeonatosDiv.innerHTML = '';  // Limpa a lista de campeonatos
+            }
         }
     });
 
@@ -148,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function exportarDados(e) {
         e.preventDefault();
         const dados = {
-            campeonatos: campeonatos // Usamos a variável campeonatos atualizada
+            campeonatos: campeonatos
         };
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dados, null, 2));
         const downloadAnchorNode = document.createElement('a');
@@ -172,9 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 try {
                     const dadosImportados = JSON.parse(event.target.result);
                     if (dadosImportados.campeonatos) {
-                        // Atualiza a base de dados com o conteúdo importado
                         localStorage.setItem('campeonatos', JSON.stringify(dadosImportados.campeonatos));
-                        campeonatos = dadosImportados.campeonatos; // Atualiza a variável campeonatos
+                        campeonatos = dadosImportados.campeonatos;
                         alert('Dados importados com sucesso! A base de dados foi atualizada.');
                     } else {
                         alert('Arquivo inválido ou dados corrompidos.');

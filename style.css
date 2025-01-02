@@ -99,8 +99,9 @@ ul li {
 
 .divisoria-resultados {
     width: 100%;
-    border-top: 2px solid #e0e0e0; /* Cor e estilo da linha conforme preferência */
-    margin: 50 px 0; /* Margem acima e abaixo da linha */
+    border-top: 1px solid #e0e0e0;
+    margin-top: 50px; /* Espaço acima da linha */
+    margin-bottom: 30px; /* Espaço abaixo da linha */
 }
 
 .section {
@@ -220,10 +221,6 @@ ul li {
     background-color: #45a049; /* Verde mais escuro para efeito de hover */
 }
 
-#bemVindoSection {
-    border-bottom: 1px solid #e0e0e0; /* Linha divisória opcional */
-    padding-bottom: 50px; /* Espaço adicional antes da seção de resultados */
-}
 
 #resultadosSection {
     margin-top: 20px; /* Espaço adicional após a seção de Bem-Vindo */
@@ -371,4 +368,59 @@ footer {
 
 #voltarParaHome:hover {
     background-color: var(--button-hover-color);
+}
+
+/* Estilos para o tema claro */
+:root {
+    --primary-color: #036fdb;
+    --secondary-color: #4CAF50;
+    --text-color: #1d1d1f;
+    --background-color: #f5f5f7;
+    --border-radius: 12px;
+    --button-hover-color: #005bb5;
+    --font-size-base: 16px;
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #0077cc;
+        --secondary-color: #45a049;
+        --text-color: #f5f5f7;
+        --background-color: #1d1d1f;
+        --button-hover-color: #0056b3;
+    }
+
+    body {
+        color: var(--text-color);
+        background-color: var(--background-color);
+    }
+
+    .container {
+        background-color: #333;
+    }
+
+    button {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    button:hover {
+        background-color: var(--button-hover-color);
+    }
+
+    input[type="text"], input[type="tel"], input[type="date"] {
+        background-color: #2c2c2c;
+        color: #f5f5f7;
+    }
+
+    /* Adicionando estilos para h1 e h2 */
+    h1, h2 {
+        color: #ffffff; /* Cor branca para melhor visibilidade */
+    }
+
 }
