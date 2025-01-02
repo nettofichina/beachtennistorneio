@@ -301,11 +301,6 @@ footer {
     gap: 20px; /* Espaçamento entre os botões */
 }
 
-/* Estilo para o botão 'Limpar Todos os Campos' e 'Informar Duplas Manualmente' */
-#limparCampos, #informarDuplas {
-    /* Estilo específico se necessário */
-}
-
 #informarDuplas {
     background-color: #FFA500; /* Laranja */
     color: white;
